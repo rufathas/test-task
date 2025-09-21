@@ -7,7 +7,7 @@ services:
         volumes:
             - ./:/var/www/html
         depends_on:
-            - mysqldb
+            - postgres_db
     nginx:
         build:
             context: .
@@ -18,14 +18,15 @@ services:
             - ./:/var/www/html
         depends_on:
             - fpm
-    mysqldb:
-        image: mysql:8.0
+    postgres_db:
+        image: postgres:15-alpine
         environment:
-            - MYSQL_DATABASE=fashion
-            - MYSQL_ROOT_PASSWORD=root
-            - MYSQL_USER=test
-            - MYSQL_PASSWORD=test
-        volumes:
-            - "./data/db/mysql:/var/lib/mysql"
+            POSTGRES_DB: payment_service
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            PGDATA: /var/lib/postgresql/data
+            TZ: Asia/Baku
         ports:
-            - "33068:3306"
+            - "5434:5432"
+        volumes:
+            - ./db-data:/var/lib/postgresql/data
