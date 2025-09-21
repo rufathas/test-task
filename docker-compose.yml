@@ -1,0 +1,31 @@
+version: '3.3'
+services:
+    fpm:
+        build:
+            context: .
+            dockerfile: docker/php-fpm/php.Dockerfile
+        volumes:
+            - ./:/var/www/html
+        depends_on:
+            - mysqldb
+    nginx:
+        build:
+            context: .
+            dockerfile: docker/nginx/nginx.Dockerfile
+        ports:
+            - "${NGINX_PORT:-8080}:80"
+        volumes:
+            - ./:/var/www/html
+        depends_on:
+            - fpm
+    mysqldb:
+        image: mysql:8.0
+        environment:
+            - MYSQL_DATABASE=fashion
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_USER=test
+            - MYSQL_PASSWORD=test
+        volumes:
+            - "./data/db/mysql:/var/lib/mysql"
+        ports:
+            - "33068:3306"
