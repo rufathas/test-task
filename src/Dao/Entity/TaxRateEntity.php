@@ -6,6 +6,7 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
 #[ORM\Table(name: 'tax_rates')]
 #[ORM\Index(name: 'idx_tax_rates_country', columns: ['country'])]
 #[ORM\HasLifecycleCallbacks]

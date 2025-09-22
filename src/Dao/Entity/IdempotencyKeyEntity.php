@@ -6,6 +6,7 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Table(name: 'purchase_idempotency_keys')]
 #[ORM\UniqueConstraint(name: 'uniq_pik_purchase_id', columns: ['purchase_id', 'key'])]
