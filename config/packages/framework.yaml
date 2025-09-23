@@ -7,6 +7,12 @@ framework:
 
     #esi: true
     #fragments: true
+    request:
+        formats:
+            json: [ 'application/json' ]
+            problem: [ 'application/problem+json' ]
+    serializer:
+        enabled: true
 
 when@test:
     framework:

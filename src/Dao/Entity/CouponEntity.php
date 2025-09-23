@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\Table(name: 'coupons')]
 #[ORM\HasLifecycleCallbacks]
+#[ORM\UniqueConstraint(name: 'uniq_coupons_code_is_active', columns: ['code', 'is_active'])]
 class CouponEntity
 {
     #[ORM\Id]
@@ -93,14 +94,14 @@ class CouponEntity
         return $this;
     }
 
-    public function getValue(): string
+    public function getValue(): BigDecimal
     {
-        return $this->value;
+        return BigDecimal::of($this->value);
     }
 
-    public function setValue(string $value): self
+    public function setValue(BigDecimal $value): self
     {
-        $this->value = $value;
+        $this->value = $value->__toString();
         return $this;
     }
 
@@ -149,7 +150,7 @@ class CouponEntity
 
     public function isPercent(): bool
     {
-        return $this->type === CouponType::Percent;
+        return $this->type === CouponType::PERCENTAGE;
     }
 
     public function isCurrentlyValid(?DateTimeImmutable $date = null): bool

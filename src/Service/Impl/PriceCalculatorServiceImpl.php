@@ -20,7 +20,10 @@ class PriceCalculatorServiceImpl implements PriceCalculatorService
     public function calculatePrice(int $productId, string $taxNumber, ?string $couponCode): void
     {
         $productEntity = $this->productService->getById(id: $productId);
-        $couponEntity = $this->couponService->getCouponByCode(code: $couponCode);
         $taxRateEntity = $this->taxRateService->getByTaxNumber(taxNumber: $taxNumber);
+        $amountAfterCouponDiscount = $this->couponService->amountWithCoupon(
+            amount: $productEntity->getPrice(),
+            couponCode: $couponCode
+        );
     }
 }

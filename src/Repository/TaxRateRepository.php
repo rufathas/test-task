@@ -21,7 +21,7 @@ class TaxRateRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TaxRateRepository::class);
+        parent::__construct($registry, TaxRateEntity::class);
     }
 
     /**

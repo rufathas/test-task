@@ -4,13 +4,14 @@ namespace App\Dao\ValueObject;
 
 use Brick\Math\BigDecimal;
 use Brick\Math\RoundingMode;
+use InvalidArgumentException;
 
 class Money
 {
     private const int SCALE = 2;
     private BigDecimal $amount;
 
-    private function __construct(BigDecimal $amount)
+    function __construct(BigDecimal $amount)
     {
         $this->amount = $amount->toScale(self::SCALE, RoundingMode::HALF_UP);
     }
@@ -52,6 +53,19 @@ class Money
         return new self($this->amount->multipliedBy(BigDecimal::of($factor)));
     }
 
+    /**
+     * @param float|int|string $divisor
+     * @return self
+     */
+    public function divide(float|int|string $divisor): self
+    {
+        $bd = BigDecimal::of($divisor);
+        if ($bd->isEqualTo(BigDecimal::zero())) {
+            throw new InvalidArgumentException('Division by zero.');
+        }
+        return new self($this->amount->dividedBy($bd, self::SCALE, RoundingMode::HALF_UP));
+    }
+
     public function toString(): string
     {
         return $this->amount->toScale(self::SCALE, RoundingMode::HALF_UP)->__toString();
@@ -59,7 +73,7 @@ class Money
 
     public function toFloat(): float
     {
-        return (float) $this->toString();
+        return (float)$this->toString();
     }
 
     /**

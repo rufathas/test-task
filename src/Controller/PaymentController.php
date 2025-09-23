@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use App\Dto\CalculatePriceRequestDto;
 use App\Service\PriceCalculatorService;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/api')]
 class PaymentController extends BaseController
 {
     public function __construct(
@@ -15,8 +15,8 @@ class PaymentController extends BaseController
     )
     {}
 
-    #[Route('/calculate-price', name: 'calculate_price')]
-    public function calculatePrice(#[MapRequestPayload] CalculatePriceRequestDto $requestDto): Response
+    #[Route('/calculate-price', name: 'calculate_price', methods: ['POST'])]
+    public function calculatePrice(#[MapRequestPayload] CalculatePriceRequestDto $requestDto)
     {
         $this->priceCalculatorService->calculatePrice(
             $requestDto->product,
