@@ -10,6 +10,13 @@ doctrine:
         use_savepoints: true
         types:
             money: App\Doctrine\Type\MoneyType
+            coupon_type: App\Doctrine\Type\CouponTypeType
+            currency: App\Doctrine\Type\CurrencyType
+            purchases_status: App\Doctrine\Type\PurchasesStatusType
+        mapping_types:
+            coupon_type: coupon_type
+            currency: currency
+            purchases_status: purchases_status
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true

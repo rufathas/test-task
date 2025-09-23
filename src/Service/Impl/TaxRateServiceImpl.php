@@ -9,7 +9,6 @@ use App\Service\TaxRateService;
 
 class TaxRateServiceImpl implements TaxRateService
 {
-
     public function __construct(
         private readonly TaxRateRepository $taxRateRepository,
     )
@@ -18,9 +17,26 @@ class TaxRateServiceImpl implements TaxRateService
     /**
      * @throws NotFoundException
      */
-    public function getByTaxNumber(string $taxNumber): TaxRateEntity
+    public function getTaxRateByTaxNumber(string $taxNumber): TaxRateEntity
     {
-        //TODO: add parsing of tax number to get country code
-        return $this->taxRateRepository->findOneByCountryOrFail(country: $taxNumber);
+        $countryCode = $this->getCountryCodeByTaxNumber(taxNumber: $taxNumber);
+        return $this->taxRateRepository->findOneByCountryAndMaskOrFail(
+            country: $countryCode,
+            mask: $this->maskTaxNumber(taxNumber: $taxNumber)
+        );
+    }
+
+    public function maskTaxNumber(string $taxNumber): string
+    {
+        //находит любую букву Unicode после первых 2 символов
+        $patternLetters = '/(?<=^.{2})\p{L}/u';
+        //находит любую цифру Unicode после первых 2 символов
+        $patternDigits  = '/(?<=^.{2})\p{N}/u';
+        return preg_replace([$patternLetters, $patternDigits], ['Y', 'X'], $taxNumber);
+    }
+
+    public function getCountryCodeByTaxNumber(string $taxNumber): string
+    {
+        return substr($taxNumber, 0, 2);
     }
 }

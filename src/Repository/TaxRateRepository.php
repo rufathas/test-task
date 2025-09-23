@@ -27,9 +27,12 @@ class TaxRateRepository extends ServiceEntityRepository
     /**
      * @throws NotFoundException
      */
-    public function findOneByCountryOrFail(string $country): TaxRateEntity
+    public function findOneByCountryAndMaskOrFail(string $country, string $mask): TaxRateEntity
     {
-        return $this->findOneBy(['country' => $country])
+        return $this->findOneBy([
+            'country' => $country,
+            'mask' => $mask
+        ])
             ?? throw new NotFoundException(
             ExceptionEnum::COUNTRY_RATE_NOT_FOUND,
             Response::HTTP_NOT_FOUND

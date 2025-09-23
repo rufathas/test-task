@@ -6,5 +6,5 @@ use App\Dao\Entity\TaxRateEntity;
 
 interface TaxRateService
 {
-    public function getByTaxNumber(string $taxNumber): TaxRateEntity;
+    public function getTaxRateByTaxNumber(string $taxNumber): TaxRateEntity;
 }

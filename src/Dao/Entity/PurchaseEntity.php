@@ -40,10 +40,10 @@ class PurchaseEntity
     #[ORM\Column(type: 'money', precision: 10, scale: 2)]
     private Money $totalAmount;
 
-    #[ORM\Column(enumType: Currency::class, columnDefinition: 'currency')]
+    #[ORM\Column(type: 'currency', enumType: Currency::class, columnDefinition: 'currency')]
     private Currency $currency;
 
-    #[ORM\Column(enumType: PurchaseStatus::class, columnDefinition: 'purchases_status')]
+    #[ORM\Column(type: 'purchases_status', enumType: PurchaseStatus::class, columnDefinition: 'purchases_status')]
     private PurchaseStatus $status;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
