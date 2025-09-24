@@ -2,6 +2,7 @@
 
 namespace App\Service\Impl;
 
+use App\Dao\ValueObject\Money;
 use App\Dto\CalculatePriceDto;
 use App\Service\CouponService;
 use App\Service\PriceCalculatorService;
@@ -21,10 +22,8 @@ class PriceCalculatorServiceImpl implements PriceCalculatorService
     public function calculatePrice(int $productId, string $taxNumber, ?string $couponCode): CalculatePriceDto
     {
         $productEntity = $this->productService->getById(id: $productId);
-        $amountAfterCouponDiscount = $this->couponService->amountWithCoupon(
-            amount: $productEntity->getPrice(),
-            couponCode: $couponCode
-        );
+
+        $amountAfterCouponDiscount = $this->amountWithCoupon($productEntity->getPrice(), $couponCode);
 
         $taxRateEntity = $this->taxRateService->getTaxRateByTaxNumber(
             taxNumber: $taxNumber
@@ -42,5 +41,13 @@ class PriceCalculatorServiceImpl implements PriceCalculatorService
             taxPercent: $taxRateEntity->getRate(),
             finalAmount: $finalAmount
         );
+    }
+
+    private function amountWithCoupon(Money $amount, ?string $couponCode): Money
+    {
+        return !is_null($couponCode) ? $this->couponService->amountWithCoupon(
+            amount: $amount,
+            couponCode: $couponCode
+        ) : $amount;
     }
 }

@@ -76,6 +76,11 @@ class Money
         return (float)$this->toString();
     }
 
+    public function toInteger(): int
+    {
+        return (int)$this->toString();
+    }
+
     /**
      * @param Money $other
      * @return bool
