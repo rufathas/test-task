@@ -31,7 +31,7 @@ class PaymentEntity
     #[ORM\Column(type: 'money', precision: 10, scale: 2)]
     private Money $amount;
 
-    #[ORM\Column(type: 'currency', enumType: Currency::class, columnDefinition: 'currency')]
+    #[ORM\Column(type: 'currency', columnDefinition: 'currency')]
     private Currency $currency;
 
     #[ORM\Column(type: Types::STRING, length: 32)]

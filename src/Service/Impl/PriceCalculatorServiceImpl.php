@@ -2,6 +2,7 @@
 
 namespace App\Service\Impl;
 
+use App\Dto\CalculatePriceDto;
 use App\Service\CouponService;
 use App\Service\PriceCalculatorService;
 use App\Service\ProductService;
@@ -17,13 +18,29 @@ class PriceCalculatorServiceImpl implements PriceCalculatorService
     )
     {}
 
-    public function calculatePrice(int $productId, string $taxNumber, ?string $couponCode): void
+    public function calculatePrice(int $productId, string $taxNumber, ?string $couponCode): CalculatePriceDto
     {
         $productEntity = $this->productService->getById(id: $productId);
-        $taxRateEntity = $this->taxRateService->getTaxRateByTaxNumber(taxNumber: $taxNumber);
         $amountAfterCouponDiscount = $this->couponService->amountWithCoupon(
             amount: $productEntity->getPrice(),
             couponCode: $couponCode
+        );
+
+        $taxRateEntity = $this->taxRateService->getTaxRateByTaxNumber(
+            taxNumber: $taxNumber
+        );
+
+        $finalAmount = $amountAfterCouponDiscount->subtract(
+                $amountAfterCouponDiscount->multiply(
+                    $taxRateEntity->getRate()->dividedBy(100)->__toString()
+                )
+            );
+
+        return new CalculatePriceDto(
+            productAmount: $productEntity->getPrice(),
+            usedCouponAmount: $amountAfterCouponDiscount,
+            taxPercent: $taxRateEntity->getRate(),
+            finalAmount: $finalAmount
         );
     }
 }

@@ -23,7 +23,7 @@ class CouponEntity
     #[ORM\Column(type: Types::STRING, length: 64, unique: true)]
     private string $code;
 
-    #[ORM\Column(type: 'coupon_type', enumType: CouponType::class, columnDefinition: 'coupon_type')]
+    #[ORM\Column(type: 'coupon_type', columnDefinition: 'coupon_type')]
     private CouponType $type;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]

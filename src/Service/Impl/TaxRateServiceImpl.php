@@ -28,11 +28,15 @@ class TaxRateServiceImpl implements TaxRateService
 
     public function maskTaxNumber(string $taxNumber): string
     {
-        //находит любую букву Unicode после первых 2 символов
-        $patternLetters = '/(?<=^.{2})\p{L}/u';
-        //находит любую цифру Unicode после первых 2 символов
-        $patternDigits  = '/(?<=^.{2})\p{N}/u';
-        return preg_replace([$patternLetters, $patternDigits], ['Y', 'X'], $taxNumber);
+        $head = mb_substr($taxNumber, 0, 2, 'UTF-8');
+        $tail = mb_substr($taxNumber, 2, null, 'UTF-8');
+
+        //находит любую букву Unicode
+        $tail = preg_replace('/\p{L}/u', 'Y', $tail);
+        //находит любую цифру Unicode
+        $tail = preg_replace('/\p{N}/u', 'X', $tail);
+
+        return $head . $tail;
     }
 
     public function getCountryCodeByTaxNumber(string $taxNumber): string

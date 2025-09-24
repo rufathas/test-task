@@ -2,6 +2,7 @@
 
 namespace App\Dao\Entity;
 
+use Brick\Math\BigDecimal;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,7 +22,7 @@ class TaxRateEntity
     #[ORM\Column(type: Types::STRING, length: 4)]
     private string $country;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 4)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
     private string $rate;
 
     #[ORM\Column(type: Types::STRING, length: 32)]
@@ -33,7 +34,7 @@ class TaxRateEntity
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
 
-    public function __construct(string $country, string $rate, string $mask)
+    public function __construct(string $country, BigDecimal $rate, string $mask)
     {
         $this->country = $country;
         $this->rate = $rate;
@@ -70,12 +71,12 @@ class TaxRateEntity
         return $this;
     }
 
-    public function getRate(): string
+    public function getRate(): BigDecimal
     {
-        return $this->rate;
+        return BigDecimal::of($this->rate);
     }
 
-    public function setRate(string $rate): self
+    public function setRate(BigDecimal $rate): self
     {
         $this->rate = $rate;
         return $this;
