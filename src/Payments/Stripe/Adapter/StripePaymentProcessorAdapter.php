@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Adapter;
+namespace App\Payments\Stripe\Adapter;
 
 use App\Dao\ValueObject\Money;
 use App\Enum\ExceptionEnum;

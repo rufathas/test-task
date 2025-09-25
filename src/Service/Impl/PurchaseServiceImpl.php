@@ -2,9 +2,9 @@
 
 namespace App\Service\Impl;
 
-use App\Enum\PaymentProcessor;
-use App\Service\PurchaseService;
+use App\Dto\PurchaseRequestDto;
 use App\Service\PriceCalculatorService;
+use App\Service\PurchaseService;
 
 class PurchaseServiceImpl implements PurchaseService
 {
@@ -14,19 +14,13 @@ class PurchaseServiceImpl implements PurchaseService
     {
     }
 
-    public function purchase(
-        int $productId,
-        string $taxNumber,
-        ?string $couponCode,
-        PaymentProcessor $paymentProcessor
-    ): void
+    public function purchase(PurchaseRequestDto $requestDto): void
     {
        $calculatePriceDto = $this->priceCalculatorService->calculatePrice(
-            productId: $productId,
-            taxNumber: $taxNumber,
-            couponCode: $couponCode
+            productId: $requestDto->product,
+            taxNumber: $requestDto->taxNumber,
+            couponCode: $requestDto->couponCode
         );
-
 
     }
 

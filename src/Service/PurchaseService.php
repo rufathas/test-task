@@ -2,14 +2,9 @@
 
 namespace App\Service;
 
-use App\Enum\PaymentProcessor;
+use App\Dto\PurchaseRequestDto;
 
 interface PurchaseService
 {
-    public function purchase(
-        int $productId,
-        string $taxNumber,
-        ?string $couponCode,
-        PaymentProcessor $paymentProcessor
-    ): void;
+    public function purchase(PurchaseRequestDto $requestDto): void;
 }
