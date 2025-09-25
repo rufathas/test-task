@@ -8,10 +8,10 @@ use Brick\Math\BigDecimal;
 class CalculatePriceDto
 {
     public function __construct(
-        public Money $productAmount,
-        public Money $usedCouponAmount,
+        public Money      $productAmount,
+        public Money      $amountAfterCouponDiscount,
         public BigDecimal $taxPercent,
-        public Money $finalAmount,
+        public Money      $finalAmount,
     )
     {
     }

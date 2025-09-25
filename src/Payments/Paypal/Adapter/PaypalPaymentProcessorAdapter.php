@@ -1,19 +1,15 @@
 <?php
 
-namespace App\Payments\Stripe\Adapter;
+namespace App\Payments\Paypal\Adapter;
 
 use App\Dao\ValueObject\Money;
-use App\Dto\PaypalPaymentResponse;
-use App\Exception\PaymentException;
+use App\Payments\Paypal\Dto\PaypalPaymentResponse;
 use App\Payments\Paypal\Enum\StatusEnum;
 use Exception;
 use Systemeio\TestForCandidates\PaymentProcessor\PaypalPaymentProcessor;
 
 class PaypalPaymentProcessorAdapter
 {
-    /**
-     * @throws PaymentException
-     */
     public function pay(Money $amount): PaypalPaymentResponse
     {
         try {
@@ -21,9 +17,10 @@ class PaypalPaymentProcessorAdapter
 
             //Response simulation
             return new PaypalPaymentResponse(
-                StatusEnum::COMPLETED, 'TRANS12345');
+                StatusEnum::COMPLETED, 'PAYPAL_TRANS_12345');
         } catch (Exception $e) {
-            return new PaypalPaymentResponse(StatusEnum::COMPLETED, 'TRANS12345', );
+            //Response simulation
+            return new PaypalPaymentResponse(StatusEnum::FAILED, 'PAYPAL_TRANS_12345', 'Some error' );
         }
     }
 }

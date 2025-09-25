@@ -52,20 +52,10 @@ class PaymentEntity
     public function __construct(
         PurchaseEntity $purchase,
         string         $provider,
-        string         $providerRef,
-        Money          $amount,
-        string         $status,
-        Currency       $currency,
-        ?string        $errorMessage = null,
     )
     {
         $this->purchase = $purchase;
         $this->provider = $provider;
-        $this->providerRef = $providerRef;
-        $this->amount = $amount;
-        $this->status = $status;
-        $this->currency = $currency;
-        $this->errorMessage = $errorMessage;
     }
 
     #[ORM\PrePersist]

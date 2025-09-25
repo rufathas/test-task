@@ -37,7 +37,7 @@ class PriceCalculatorServiceImpl implements PriceCalculatorService
 
         return new CalculatePriceDto(
             productAmount: $productEntity->getPrice(),
-            usedCouponAmount: $amountAfterCouponDiscount,
+            amountAfterCouponDiscount: $amountAfterCouponDiscount,
             taxPercent: $taxRateEntity->getRate(),
             finalAmount: $finalAmount
         );

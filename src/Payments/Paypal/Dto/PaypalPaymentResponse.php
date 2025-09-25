@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dto;
+namespace App\Payments\Paypal\Dto;
 
 use App\Payments\Paypal\Enum\StatusEnum;
 

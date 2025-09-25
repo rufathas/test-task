@@ -35,6 +35,7 @@ final class ApiExceptionSubscriber implements EventSubscriberInterface
             'error' => [],
         ];
 
+        //TODO: add catch for ValidationFailedException 422
         if ($e instanceof CustomException) {
             $status = $e->getCode();
             $exceptionResponse['error']['messageEnum'] = $e->getException()->name;

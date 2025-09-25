@@ -13,5 +13,5 @@ class CalculatePriceRequestDto
     public int $product;
     #[Validator\NotBlank]
     public string $taxNumber;
-    public string $couponCode;
+    public ?string $couponCode = null;
 }

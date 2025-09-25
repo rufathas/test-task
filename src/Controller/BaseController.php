@@ -16,4 +16,15 @@ abstract class BaseController extends AbstractController
             status: $status
         );
     }
+
+    public function successMessageResponse(string $message, int $status = Response::HTTP_OK): JsonResponse
+    {
+        return $this->json(
+            data: array_merge([
+                'status' => 'success',
+                'message' => $message
+            ]),
+            status: $status
+        );
+    }
 }

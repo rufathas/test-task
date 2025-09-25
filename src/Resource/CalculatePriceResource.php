@@ -15,7 +15,7 @@ class CalculatePriceResource extends JsonResource
         $calculatePriceDto = $this->data;
         return [
             'productAmount' => $calculatePriceDto->productAmount->toString(),
-            'usedCouponAmount' => $calculatePriceDto->usedCouponAmount->toString(),
+            'amountAfterCouponDiscount' => $calculatePriceDto->amountAfterCouponDiscount->toString(),
             'taxPercent' => $calculatePriceDto->taxPercent->__toString(),
             'finalAmount' => $calculatePriceDto->finalAmount->toString(),
         ];

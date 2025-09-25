@@ -2,13 +2,11 @@
 
 namespace App\Payments\Paypal\Service;
 
-use App\Dao\Entity\PaymentEntity;
 use App\Dto\PaymentRequest;
 use App\Enum\PaymentProcessor;
-use App\Exception\PaymentException;
 use App\Payments\PaymentService;
+use App\Payments\Paypal\Adapter\PaypalPaymentProcessorAdapter;
 use App\Payments\Paypal\Enum\StatusEnum;
-use App\Payments\Stripe\Adapter\PaypalPaymentProcessorAdapter;
 
 class PaypalPaymentService implements PaymentService
 {
@@ -17,19 +15,19 @@ class PaypalPaymentService implements PaymentService
         return $paymentProcessor === PaymentProcessor::PAYPAL;
     }
 
-    /**
-     * @throws PaymentException
-     */
-    public function charge(PaymentRequest $paymentRequest, PaymentEntity $paymentEntity): void
+    public function charge(PaymentRequest $paymentRequest): void
     {
-        $paymentResponse = (new PaypalPaymentProcessorAdapter())->pay($paymentRequest->amount);
-        $paymentEntity->setAmount($paymentRequest->amount);
-        $paymentEntity->setCurrency($paymentRequest->currency);
+        $purchaseEntity = $paymentRequest->purchaseEntity;
+        $paymentEntity = $paymentRequest->paymentEntity;
+
+        $paymentResponse = (new PaypalPaymentProcessorAdapter())->pay($purchaseEntity->getTotalAmount());
+        $paymentEntity->setAmount($purchaseEntity->getTotalAmount());
+        $paymentEntity->setCurrency($purchaseEntity->getCurrency());
         $paymentEntity->setStatus($paymentResponse->status->value);
         $paymentEntity->setProviderRef($paymentResponse->transactionId);
 
         // Simulate request body
-        $paymentEntity->setRequestBody(json_encode(['amount' => $paymentRequest->amount]));
+        $paymentEntity->setRequestBody(json_encode(['amount' => $purchaseEntity->getTotalAmount()->toString()]));
         if ($paymentResponse->status === StatusEnum::FAILED) {
             $paymentEntity->setErrorMessage($paymentResponse->errorMessage);
         }

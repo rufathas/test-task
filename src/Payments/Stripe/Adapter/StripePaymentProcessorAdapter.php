@@ -3,20 +3,24 @@
 namespace App\Payments\Stripe\Adapter;
 
 use App\Dao\ValueObject\Money;
-use App\Enum\ExceptionEnum;
-use App\Exception\PaymentException;
+use App\Payments\Stripe\Dto\StripePaymentResponse;
+use App\Payments\Stripe\Enum\StatusEnum;
 use Systemeio\TestForCandidates\PaymentProcessor\StripePaymentProcessor;
 
 class StripePaymentProcessorAdapter
 {
-    /**
-     * @throws PaymentException
-     */
-    public function pay(Money $amount): void
+    public function pay(Money $amount): StripePaymentResponse
     {
         $response = (new StripePaymentProcessor())->processPayment($amount->toFloat());
-        if (!$response)
-            throw new PaymentException(ExceptionEnum::STRIPE_PAYMENT_NOT_COMPLETED);
+        if ($response) {
+            //Response simulation
+            return new StripePaymentResponse(
+                StatusEnum::CREATED, 'STRIPE_TRANS_12345');
+        }
+
+        //Response simulation
+        return new StripePaymentResponse(
+            StatusEnum::ERROR, 'STRIPE_TRANS_12345','Some Error message');
 
     }
 }
