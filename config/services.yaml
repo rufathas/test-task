@@ -21,9 +21,9 @@ services:
     App\Service\CouponService: '@App\Service\Impl\CouponServiceImpl'
     App\Service\TaxRateService: '@App\Service\Impl\TaxRateServiceImpl'
 
-    App\Payments\:
-      resource: '../src/Payments/*/Service/*'
-      tags: [ 'app.payment_strategy' ]
+    _instanceof:
+        App\Payments\PaymentService:
+            tags: [ 'app.payment_strategy' ]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
