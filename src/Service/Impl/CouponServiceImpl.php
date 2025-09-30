@@ -7,7 +7,6 @@ use App\Dao\ValueObject\Money;
 use App\Exception\NotFoundException;
 use App\Repository\CouponRepository;
 use App\Service\CouponService;
-use Brick\Math\BigDecimal;
 use DateTimeImmutable;
 
 class CouponServiceImpl implements CouponService
@@ -15,8 +14,7 @@ class CouponServiceImpl implements CouponService
     public function __construct(
         private readonly CouponRepository $couponRepository,
     )
-    {
-    }
+    {}
 
     /**
      * @throws NotFoundException

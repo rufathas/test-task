@@ -17,4 +17,17 @@ class PurchaseRequestDto
     public ?string $couponCode = null;
     #[Validator\NotBlank]
     public PaymentProcessor $paymentProcessor;
+
+    public function __construct(
+        int $product,
+        string $taxNumber,
+        ?string $couponCode,
+        PaymentProcessor $paymentProcessor
+    )
+    {
+        $this->product = $product;
+        $this->taxNumber = $taxNumber;
+        $this->couponCode = $couponCode;
+        $this->paymentProcessor = $paymentProcessor;
+    }
 }

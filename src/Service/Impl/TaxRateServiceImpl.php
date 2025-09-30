@@ -26,7 +26,7 @@ class TaxRateServiceImpl implements TaxRateService
         );
     }
 
-    public function maskTaxNumber(string $taxNumber): string
+    private function maskTaxNumber(string $taxNumber): string
     {
         $head = mb_substr($taxNumber, 0, 2, 'UTF-8');
         $tail = mb_substr($taxNumber, 2, null, 'UTF-8');
