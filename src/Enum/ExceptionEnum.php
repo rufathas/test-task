@@ -10,4 +10,5 @@ enum ExceptionEnum: string
     case INTERNAL_SERVER_ERROR = 'Internal Server Error';
     case PAYPAL_PAYMENT_NOT_COMPLETED = 'Paypal payment not completed';
     case STRIPE_PAYMENT_NOT_COMPLETED = 'Stripe payment not completed';
+    case UNPROCESSABLE_ENTITY = 'Validation failed';
 }

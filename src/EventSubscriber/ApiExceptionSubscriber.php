@@ -11,7 +11,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Validator\ConstraintViolationInterface;
+use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 final class ApiExceptionSubscriber implements EventSubscriberInterface
 {
@@ -35,8 +38,25 @@ final class ApiExceptionSubscriber implements EventSubscriberInterface
             'error' => [],
         ];
 
-        //TODO: add catch for ValidationFailedException 422
-        if ($e instanceof CustomException) {
+
+        if ($e instanceof UnprocessableEntityHttpException &&
+            ($prev = $e->getPrevious()) instanceof ValidationFailedException
+        ) {
+            $violationsArr = [];
+            /** @var ConstraintViolationInterface $v */
+            foreach ($prev->getViolations() as $v) {
+                $violationsArr[] = [
+                    'field'   => $this->normalizePath($v->getPropertyPath()),
+                    'message' => $v->getMessage(),
+                ];
+            }
+
+            $status = Response::HTTP_UNPROCESSABLE_ENTITY;
+            $exceptionResponse['error']['messageEnum'] = ExceptionEnum::UNPROCESSABLE_ENTITY->name;
+            $exceptionResponse['error']['messageText'] = ExceptionEnum::UNPROCESSABLE_ENTITY->value;
+            $exceptionResponse['error']['details'] = $violationsArr;
+
+        } else if ($e instanceof CustomException) {
             $status = $e->getCode();
             $exceptionResponse['error']['messageEnum'] = $e->getException()->name;
             $exceptionResponse['error']['messageText'] = $e->getException()->value;
@@ -74,5 +94,11 @@ final class ApiExceptionSubscriber implements EventSubscriberInterface
         $response->headers->set('Content-Type', 'application/problem+json');
 
         $event->setResponse($response);
+    }
+
+    private function normalizePath(string $path): string
+    {
+        $path = preg_replace('/\[(\w+)\]/', '.$1', $path);
+        return ltrim((string)$path, '.');
     }
 }
