@@ -44,11 +44,11 @@ class CouponEntity
     #[ORM\Column(type: Types::DATETIMETZ_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
 
-    public function __construct(string $code, CouponType $type, string $value)
+    public function __construct(string $code, CouponType $type, BigDecimal $value)
     {
         $this->code = $code;
         $this->type = $type;
-        $this->value = $value;
+        $this->value = $value->__toString();
     }
 
     # Lifecycle callbacks
