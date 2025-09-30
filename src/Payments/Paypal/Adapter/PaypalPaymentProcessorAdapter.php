@@ -20,7 +20,7 @@ class PaypalPaymentProcessorAdapter
                 StatusEnum::COMPLETED, 'PAYPAL_TRANS_12345');
         } catch (Exception $e) {
             //Response simulation
-            return new PaypalPaymentResponse(StatusEnum::FAILED, 'PAYPAL_TRANS_12345', 'Some error' );
+            return new PaypalPaymentResponse(StatusEnum::FAILED, 'PAYPAL_TRANS_12345', 'Some error');
         }
     }
 }

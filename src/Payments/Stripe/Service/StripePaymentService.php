@@ -10,6 +10,11 @@ use App\Payments\Stripe\Enum\StatusEnum;
 
 class StripePaymentService implements PaymentService
 {
+    public function __construct(
+        private readonly StripePaymentProcessorAdapter $adapter
+    )
+    {}
+
     public function supports(PaymentProcessor $paymentProcessor): bool
     {
         return $paymentProcessor === PaymentProcessor::STRIPE;
@@ -20,7 +25,7 @@ class StripePaymentService implements PaymentService
         $purchaseEntity = $paymentRequest->purchaseEntity;
         $paymentEntity = $paymentRequest->paymentEntity;
 
-        $paymentResponse = (new StripePaymentProcessorAdapter)->pay($purchaseEntity->getTotalAmount());
+        $paymentResponse = $this->adapter->pay($purchaseEntity->getTotalAmount());
 
         $paymentEntity->setAmount($purchaseEntity->getTotalAmount());
         $paymentEntity->setCurrency($purchaseEntity->getCurrency());

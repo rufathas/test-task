@@ -10,6 +10,11 @@ use App\Payments\Paypal\Enum\StatusEnum;
 
 class PaypalPaymentService implements PaymentService
 {
+    public function __construct(
+        private readonly PaypalPaymentProcessorAdapter $adapter
+    )
+    {}
+
     public function supports(PaymentProcessor $paymentProcessor): bool
     {
         return $paymentProcessor === PaymentProcessor::PAYPAL;
@@ -20,7 +25,7 @@ class PaypalPaymentService implements PaymentService
         $purchaseEntity = $paymentRequest->purchaseEntity;
         $paymentEntity = $paymentRequest->paymentEntity;
 
-        $paymentResponse = (new PaypalPaymentProcessorAdapter())->pay($purchaseEntity->getTotalAmount());
+        $paymentResponse = $this->adapter->pay($purchaseEntity->getTotalAmount());
         $paymentEntity->setAmount($purchaseEntity->getTotalAmount());
         $paymentEntity->setCurrency($purchaseEntity->getCurrency());
         $paymentEntity->setStatus($paymentResponse->status->value);
