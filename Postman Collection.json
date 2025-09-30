@@ -1,0 +1,438 @@
+{
+	"info": {
+		"_postman_id": "ed392809-fac5-49d3-9bcc-15ccc3af23d7",
+		"name": "Payment Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17189448"
+	},
+	"item": [
+		{
+			"name": "Calculate Price",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"product\": 1, \r\n    \"taxNumber\": \"FRAC123456278\", \r\n    \"couponCode\": \"SPIDERMAN74\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/calculate-price",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"calculate-price"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": 1, \r\n    \"taxNumber\": \"FRAC123456278\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/calculate-price",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"calculate-price"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.29.1"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.25"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 25 Sep 2025 22:29:46 GMT"
+						},
+						{
+							"key": "X-Robots-Tag",
+							"value": "noindex"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"productAmount\": \"1000.00\",\n        \"amountAfterCouponDiscount\": \"1000.00\",\n        \"taxPercent\": \"10.00\",\n        \"finalAmount\": \"900.00\"\n    }\n}"
+				},
+				{
+					"name": "success with coupon",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": 1, \r\n    \"taxNumber\": \"FRAC123456278\", \r\n    \"couponCode\": \"TESTCOUPON\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/calculate-price",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"calculate-price"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.29.1"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.25"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 25 Sep 2025 22:30:19 GMT"
+						},
+						{
+							"key": "X-Robots-Tag",
+							"value": "noindex"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"productAmount\": \"1000.00\",\n        \"amountAfterCouponDiscount\": \"850.00\",\n        \"taxPercent\": \"10.00\",\n        \"finalAmount\": \"765.00\"\n    }\n}"
+				},
+				{
+					"name": "Calculate Price",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": 1, \r\n    \"taxNumber\": \"FRAC1234562782\", \r\n    \"couponCode\": \"TESTCOUPON\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/calculate-price",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"calculate-price"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.29.1"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.25"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 25 Sep 2025 22:30:57 GMT"
+						},
+						{
+							"key": "X-Robots-Tag",
+							"value": "noindex"
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": "{\n    \"success\": false,\n    \"error\": {\n        \"messageEnum\": \"COUNTRY_RATE_NOT_FOUND\",\n        \"messageText\": \"Country rate not found\"\n    },\n    \"trace\": [\n        \"/var/www/html/src/Service/Impl/TaxRateServiceImpl.php:23\",\n        \"/var/www/html/src/Service/Impl/PriceCalculatorServiceImpl.php:28\",\n        \"/var/www/html/src/Controller/CalculatePriceController.php:25\",\n        \"/var/www/html/vendor/symfony/http-kernel/HttpKernel.php:183\",\n        \"/var/www/html/vendor/symfony/http-kernel/HttpKernel.php:76\",\n        \"/var/www/html/vendor/symfony/http-kernel/Kernel.php:182\",\n        \"/var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php:35\",\n        \"/var/www/html/vendor/autoload_runtime.php:29\",\n        \"/var/www/html/public/index.php:5\"\n    ]\n}"
+				},
+				{
+					"name": "product not found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": 2, \r\n    \"taxNumber\": \"FRAC123456278\", \r\n    \"couponCode\": \"TESTCOUPON\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/calculate-price",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"calculate-price"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.29.1"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.25"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 25 Sep 2025 22:31:34 GMT"
+						},
+						{
+							"key": "X-Robots-Tag",
+							"value": "noindex"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": false,\n    \"error\": {\n        \"messageEnum\": \"PRODUCT_NOT_FOUND\",\n        \"messageText\": \"Product not found\"\n    },\n    \"trace\": [\n        \"/var/www/html/src/Service/Impl/ProductServiceImpl.php:24\",\n        \"/var/www/html/src/Service/Impl/PriceCalculatorServiceImpl.php:24\",\n        \"/var/www/html/src/Controller/CalculatePriceController.php:25\",\n        \"/var/www/html/vendor/symfony/http-kernel/HttpKernel.php:183\",\n        \"/var/www/html/vendor/symfony/http-kernel/HttpKernel.php:76\",\n        \"/var/www/html/vendor/symfony/http-kernel/Kernel.php:182\",\n        \"/var/www/html/vendor/symfony/runtime/Runner/Symfony/HttpKernelRunner.php:35\",\n        \"/var/www/html/vendor/autoload_runtime.php:29\",\n        \"/var/www/html/public/index.php:5\"\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Purchase",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"product\": 1, \r\n    \"taxNumber\": \"FRAC123456278\", \r\n    \"couponCode\": \"SPIDERMAN74\",\r\n    \"paymentProcessor\": \"paypal\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/purchase",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"purchase"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": 1, \r\n    \"taxNumber\": \"FRAC123456278\", \r\n    \"couponCode\": \"TESTCOUPON\",\r\n    \"paymentProcessor\": \"paypal\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/purchase",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"purchase"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.29.1"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.25"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 25 Sep 2025 22:56:52 GMT"
+						},
+						{
+							"key": "X-Robots-Tag",
+							"value": "noindex"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": \"Purchase process run successfully\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

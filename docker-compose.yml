@@ -1,6 +1,7 @@
 version: '3.3'
 services:
     fpm:
+        container_name: test-task-php-fpm
         build:
             context: .
             dockerfile: docker/php-fpm/php.Dockerfile
@@ -9,6 +10,7 @@ services:
         depends_on:
             - postgres_db
     nginx:
+        container_name: test-task-nginx
         build:
             context: .
             dockerfile: docker/nginx/nginx.Dockerfile
@@ -19,6 +21,7 @@ services:
         depends_on:
             - fpm
     postgres_db:
+        container_name: test-task-postgres
         image: postgres:15-alpine
         environment:
             POSTGRES_DB: payment_service
